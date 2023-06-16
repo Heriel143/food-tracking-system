@@ -89,7 +89,9 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.purchases') }}">All Purchases</a></li>
-                        <li><a href="{{ route('pending.purchases') }}">Approval Purchases</a></li>
+                        @if (Auth::user()->role_id == 3)
+                            <li><a href="{{ route('pending.purchases') }}">Approval Purchases</a></li>
+                        @endif
                         <li><a href="{{ route('purchase.report') }}">Daily Purchase Report</a></li>
                     </ul>
 
@@ -101,23 +103,27 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.invoices') }}">All Invoices</a></li>
-                        <li><a href="{{ route('pending.invoices') }}">Approval Invoice</a></li>
+                        @if (Auth::user()->role_id == 2)
+                            <li><a href="{{ route('pending.invoices') }}">Approval Invoice</a></li>
+                        @endif
                         <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li>
                     </ul>
 
                 </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-send-line"></i>
-                        <span>Manage Employees</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('all.employees') }}">All Employees</a></li>
-                        {{-- <li><a href="{{ route('pending.invoices') }}">Approval Invoice</a></li>
+                @if (Auth::user()->role_id == 3)
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="ri-mail-send-line"></i>
+                            <span>Manage Employees</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{ route('all.employees') }}">All Employees</a></li>
+                            {{-- <li><a href="{{ route('pending.invoices') }}">Approval Invoice</a></li>
                         <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li> --}}
-                    </ul>
+                        </ul>
 
-                </li>
+                    </li>
+                @endif
 
 
 

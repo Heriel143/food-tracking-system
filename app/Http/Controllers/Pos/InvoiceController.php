@@ -19,7 +19,7 @@ class InvoiceController extends Controller
 {
     public function allInvoices()
     {
-        $invoices = Invoice::where('status', '1')->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+        $invoices = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
         return view('admin.invoice.allInvoices', compact('invoices'));
     }
     public function pendingInvoices()

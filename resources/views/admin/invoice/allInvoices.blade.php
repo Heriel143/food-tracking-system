@@ -61,6 +61,11 @@
                                                     class="btn btn-success sm" title="Print Invoice" id="print"> <i
                                                         class="fas fa-print"></i>
                                                 </a>
+                                                @if ($invoice->status == 0)
+                                                    <a href="#" class="btn btn-warning sm" title="Print Invoice"
+                                                        id="print"> Pending
+                                                    </a>
+                                                @endif
                                             </td>
 
                                         </tr>

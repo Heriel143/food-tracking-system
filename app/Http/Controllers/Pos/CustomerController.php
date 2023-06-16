@@ -15,6 +15,11 @@ use Intervention\Image\Facades\Image;
 
 class CustomerController extends Controller
 {
+    // CONTROLLER
+    // public function __construct()
+    // {
+    //     return $this->middleware(['auth']);
+    // }
     //
     public function allCustomers()
     {

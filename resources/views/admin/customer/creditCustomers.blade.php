@@ -58,9 +58,13 @@
 
 
                                             <td>
-                                                <a href="{{ route('edit.customer.invoice', $payment->invoice->id) }}"
-                                                    class="btn btn-info sm" title="Edit Data"> <i class="fas fa-edit"></i>
-                                                </a>
+
+                                                @if (Auth::user()->role_id == 2)
+                                                    <a href="{{ route('edit.customer.invoice', $payment->invoice->id) }}"
+                                                        class="btn btn-info sm" title="Edit Data"> <i
+                                                            class="fas fa-edit"></i>
+                                                    </a>
+                                                @endif
 
                                                 <a href="{{ route('view.customer.invoice', $payment->invoice->id) }}"
                                                     class="btn btn-success sm" title="View Invoice" id="view"> <i
