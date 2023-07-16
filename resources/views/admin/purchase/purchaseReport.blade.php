@@ -4,7 +4,7 @@
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
+                <div class="col-7">
                     <div class="card">
                         <div class="card-body">
 
@@ -12,14 +12,14 @@
                             <form action="{{ route('print.purchase.report') }}" method="get" id="myForm">
                                 <div class="mt-3 row">
 
-                                    <div class="col-md-4 form-group">
+                                    <div class="col-md-5 form-group">
                                         <div class="md-3">
                                             <label for="example-text-input" class="form-label">Start Date</label>
                                             <input name="start_date" class="form-control example-date-input" type="date"
                                                 id="start_date">
                                         </div>
                                     </div>
-                                    <div class="col-md-4 form-group">
+                                    <div class="col-md-5 form-group">
                                         <div class="md-3">
                                             <label for="example-text-input" class="form-label">End Date</label>
                                             <input name="end_date" class="form-control example-date-input" type="date"
@@ -27,7 +27,7 @@
                                         </div>
                                     </div>
 
-                                    <div class=" col-md-4">
+                                    <div class=" col-md-2">
                                         <div class="md-3">
                                             <button type="submit"
                                                 class="justify-center px-3 py-2 font-semibold text-white bg-blue-900 rounded-lg mt-7 hover:cursor-pointer addeventmore hover:bg-blue-800">

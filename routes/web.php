@@ -10,8 +10,11 @@ use App\Http\Controllers\Pos\PurchaseControler;
 use App\Http\Controllers\Pos\StockController;
 use App\Http\Controllers\Pos\SupplierController;
 use App\Http\Controllers\Pos\UnitController;
+use App\Http\Controllers\ReceivedPurchaseController;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\UserController;
 use App\Models\Invoice;
+use App\Models\ReceivedPurchase;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,9 +32,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+
+
+    // return view('admin.index');
+});
 
 Route::middleware('auth')->group(function () {
 
@@ -106,6 +112,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(PurchaseControler::class)->group(function () {
         Route::get('/admin/all/purchases', 'allPurchases')->name('all.purchases');
         Route::get('/admin/pending/purchases', 'pendingPurchases')->name('pending.purchases');
+        // Route::get('/admin/receive/purchases', 'receivePurchases')->name('receive.purchases');
         Route::get('/admin/approve/purchases/{id}', 'approvePurchase')->name('approve.purchase');
         Route::get('/admin/add/purchase', 'addPurchase')->name('add.purchase');
         Route::post('/admin/store/purchase', 'storePurchase')->name('store.purchase');
@@ -142,6 +149,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/edit/employee/{id}', 'editEmployee')->name('edit.employee');
         Route::post('/admin/update/employee', 'updateEmployee')->name('update.employee');
         Route::get('/admin/delete/employee/{id}', 'deleteEmployee')->name('delete.employee');
+    });
+
+    Route::controller(RegionController::class)->group(function () {
+        Route::get('/admin/all/regions', 'allRegions')->name('all.regions');
+        Route::post('/admin/store/region', 'storeRegion')->name('store.region');
+        Route::get('/admin/edit/region/{id}', 'editRegion')->name('edit.region');
+        Route::post('/admin/update/region', 'updateRegion')->name('update.region');
+        Route::get('/admin/delete/region/{id}', 'deleteRegion')->name('delete.region');
+    });
+    Route::controller(ReceivedPurchaseController::class)->group(function () {
+        Route::get('/admin/receive/purchases', 'all')->name('receive.purchases.all');
+        Route::get('/admin/receive/purchase/{id}', 'receive')->name('receive.purchase');
+        Route::get('/admin/receive/purchase/details/{id}', 'receiveDetails')->name('receive.purchase.details');
+        Route::post('/admin/receive/details', 'receiveDetailOn')->name('receive.details');
+        Route::get('/admin/receive/incomplete', 'receivedAllIncomplete')->name('receive.purchases.incomplete');
+        Route::get('/admin/receive/incomplete/print', 'receivedAllIncompletePrint')->name('print.incomplete.purchase');
     });
 });
 

@@ -19,7 +19,7 @@ class InvoiceController extends Controller
 {
     public function allInvoices()
     {
-        $invoices = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+        $invoices = Invoice::where('region_id', Auth::user()->region_id)->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
         return view('admin.invoice.allInvoices', compact('invoices'));
     }
     public function pendingInvoices()
@@ -47,7 +47,7 @@ class InvoiceController extends Controller
     {
         $start_date = date('Y-m-d', strtotime($request->start_date));
         $end_date = date('Y-m-d', strtotime($request->end_date));
-        $invoices = Invoice::whereBetween('date', [$start_date, $end_date])->where('status', '1')->get();
+        $invoices = Invoice::where('region_id', Auth::user()->region_id)->where('status', 1)->whereBetween('date', [$start_date, $end_date])->get();
         return view('admin.invoice.getDailyInvoiceReport', compact('invoices', 'start_date', 'end_date'));
     }
 
@@ -81,6 +81,10 @@ class InvoiceController extends Controller
             }
             $invoice->save();
         });
+
+        $payment = Payment::where('invoice_id', $id)->first();
+        $payment->status = '1';
+        $payment->save();
 
         $notification = array(
             'message' => 'Invoice Approved Successfully',
@@ -116,10 +120,10 @@ class InvoiceController extends Controller
         }
         $products = Product::all();
         $customers = Customer::all();
-        $categories = Category::all();
+        // $categories = Category::all();
 
         $date = date("Y-m-d");
-        return view('admin.invoice.addInvoice', compact('categories', 'products', 'customers', 'invoice_no', 'date'));
+        return view('admin.invoice.addInvoice', compact('products', 'customers', 'invoice_no', 'date'));
     }
     public function getProduct(Request $request)
     {
@@ -130,7 +134,7 @@ class InvoiceController extends Controller
     public function getStock(Request $request)
     {
 
-        $stock = Product::select('quantity')->where('category_id', $request->category_id)->where('id', $request->product_id)->get();
+        $stock = Product::select('quantity')->where('region_id', Auth::user()->region_id)->where('id', $request->product_id)->get();
         // dd($stock);
         return response()->json($stock);
     }
@@ -156,17 +160,19 @@ class InvoiceController extends Controller
             $invoice->date = date('Y-m-d', strtotime($request->date));
             $invoice->description = $request->description;
             $invoice->status = '0';
+            $invoice->region_id = Auth::user()->region_id;
+
             $invoice->created_by = Auth::user()->id;
             $invoice->created_at = Carbon::now();
 
             DB::transaction(function () use ($request, $invoice) {
                 if (($invoice->save())) {
-                    $count_category = count($request->category_id);
-                    for ($i = 0; $i < $count_category; $i++) {
+                    $count_product = count($request->product_id);
+                    for ($i = 0; $i < $count_product; $i++) {
                         $invoice_details = new InvoiceDetail();
                         $invoice_details->date = date('Y-m-d', strtotime($request->date));
                         $invoice_details->invoice_id = $invoice->id;
-                        $invoice_details->category_id = $request->category_id[$i];
+                        // $invoice_details->category_id = $request->category_id[$i];
                         $invoice_details->product_id = $request->product_id[$i];
                         $invoice_details->selling_qty = $request->selling_qty[$i];
                         $invoice_details->unit_price = $request->unit_price[$i];
@@ -181,6 +187,8 @@ class InvoiceController extends Controller
 
                     $payment->invoice_id = $invoice->id;
                     $payment->customer_id = $request->customer_id;
+                    $payment->region_id = Auth::user()->region_id;
+                    $payment->status = 0;
                     $payment->paid_status = $request->paid_status;
                     $payment->total_amount = $request->estimated_amount;
                     if ($request->discount_amount)

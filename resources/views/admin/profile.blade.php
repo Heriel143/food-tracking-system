@@ -6,7 +6,7 @@
                 <div class="col-lg-4">
                     <div class="card">
                         <img class="object-fill mx-auto my-4 rounded-full h-52 w-52"
-                            src="{{ !empty($adminData->profile_image) ? url('upload/admin_images/' . $adminData->profile_image) : url('upload/no_image.jpg') }}"
+                            src="{{ !empty($adminData->profile_image) ? url($adminData->profile_image) : url('upload/no_image.jpg') }}"
                             alt="Card image cap">
                         <div class="card-body">
                             <h4 class="card-title">Name: {{ $adminData->name }}</h4>

@@ -8,8 +8,8 @@ $(function () {
             text: "You want to delete this Data?",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
@@ -38,6 +38,31 @@ $(function () {
                 Swal.fire(
                     "Approved!",
                     "Your Purchase has been Approved.",
+                    "success"
+                );
+            }
+        });
+    });
+});
+$(function () {
+    $(document).on("click", "#ReceiveBtn", function (e) {
+        e.preventDefault();
+        var link = $(this).attr("href");
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You receive this product in the same Quantity as Purchased?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, continue",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link;
+                Swal.fire(
+                    "Approved!",
+                    "Purchase Received Successful.",
                     "success"
                 );
             }

@@ -12,6 +12,9 @@ class AdminController extends Controller
 {
     public function destroy(Request $request)
     {
+        // $id = Auth::user()->id;
+        // dd($id);
+        User::where('id', Auth::user()->id)->update(['status' => 0]);
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

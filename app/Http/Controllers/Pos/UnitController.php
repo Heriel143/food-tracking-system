@@ -13,7 +13,7 @@ class UnitController extends Controller
     //
     public function allUnits()
     {
-        $units = Unit::latest()->get();
+        $units = Unit::where('region_id', Auth::user()->region_id)->get();
         return view('admin.unit.allUnits', compact('units'));
     }
     public function addUnit()
@@ -25,6 +25,7 @@ class UnitController extends Controller
     {
         Unit::insert([
             'name' => $request->name,
+            'region_id' => Auth::user()->region_id,
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
         ]);

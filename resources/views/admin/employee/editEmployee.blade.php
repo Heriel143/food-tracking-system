@@ -4,11 +4,11 @@
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-8">
+                <div class="col-7">
                     <div class="card">
                         <div class="card-body">
 
-                            <h1 class="text-xl font-bold card-title">Edit Employee Page</h1>
+                            <h1 class="text-base font-semibold">Edit Employee</h1>
                             @if (count($errors))
                                 @foreach ($errors->all() as $error)
                                     <p class="alert alert-danger">{{ $error }}</p>
@@ -20,7 +20,7 @@
                                 <input type="hidden" value="{{ $employee->id }}" name="id">
                                 <div class="mb-3 row">
                                     <label for="example-text-input" class="col-sm-2 col-form-label">Name:</label>
-                                    <div class="col-sm-8 form-group">
+                                    <div class="col-sm-9 form-group">
                                         <input class="form-control" type="text" value="{{ $employee->name }}"
                                             name="name" id="name">
                                     </div>
@@ -29,21 +29,34 @@
                                 <!-- end row -->
                                 <div class="mb-3 row">
                                     <label for="example-text-input" class="col-sm-2 col-form-label">Email</label>
-                                    <div class="form-group col-sm-8">
+                                    <div class="form-group col-sm-9">
                                         <input class="form-control" type="email" value="{{ $employee->email }}"
                                             name="email" id="email">
                                     </div>
                                 </div>
                                 <!-- end row -->
                                 <div class="mb-3 row">
-                                    <label class="col-sm-2 col-form-label">Employee Role</label>
-                                    <div class="col-sm-8">
+                                    <label class="col-sm-2 col-form-label">Region</label>
+                                    <div class="col-sm-9">
+                                        <select name="region_id" class="form-select" aria-label="Default select example">
+                                            <option selected="">select region</option>
+                                            @foreach ($regions as $region)
+                                                <option
+                                                    value="{{ $region->id }}"{{ $region->id == $employee->region_id ? 'selected' : '' }}>
+                                                    {{ $region->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-sm-2 col-form-label">Role</label>
+                                    <div class="col-sm-9">
                                         <select name="employee_role" class="form-select"
                                             aria-label="Default select example">
                                             <option selected="">select role</option>
                                             @foreach ($roles as $role)
                                                 <option
-                                                    value="{{ $role->role_id }}"{{ $role->role_id == $employee->role_id ? 'selected' : '' }}>
+                                                    value="{{ $role->id }}"{{ $role->id == $employee->role_id ? 'selected' : '' }}>
                                                     {{ $role->role }}</option>
                                             @endforeach
                                         </select>
@@ -52,7 +65,7 @@
                                 <!-- end row -->
                                 <div class="mb-3 row">
                                     <label for="example-text-input" class="col-sm-2 col-form-label">Image </label>
-                                    <div class="col-sm-8 form-group">
+                                    <div class="col-sm-9 form-group">
                                         <input name="image" class="form-control" type="file" id="image">
                                     </div>
                                 </div>
@@ -62,12 +75,13 @@
                                     <label for="example-text-input" class="col-sm-2 col-form-label"> </label>
                                     <div class="col-sm-10">
                                         <img id="showImage" class="rounded avatar-lg"
-                                            src="{{ url($employee->profile_image) }}" alt="Card image cap">
+                                            src="{{ !empty($employee->profile_image) ? url($employee->profile_image) : url('upload/no_image.jpg') }}"
+                                            alt="Card image cap">
                                     </div>
                                 </div>
 
 
-                                <div class="flex justify-end">
+                                <div class="flex justify-end col-sm-11">
                                     <button type="submit"
                                         class="px-3 py-2 font-semibold text-white bg-blue-900 rounded-lg hover:bg-blue-800">Update
                                         Employee</button>
@@ -99,6 +113,9 @@
                     image: {
                         required: false,
                     },
+                    region_id: {
+                        required: false,
+                    },
                 },
                 messages: {
                     name: {
@@ -113,6 +130,9 @@
                     },
                     image: {
                         required: 'Please Select one Image',
+                    },
+                    region_id: {
+                        required: 'Please Select Region',
                     },
                 },
                 errorElement: 'span',

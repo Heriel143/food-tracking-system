@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('mobile_no');
             $table->string('email');
             $table->string('address');
-            $table->tinyInteger('status')->default('1');
+            $table->foreignId('region_id')->constrained();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();

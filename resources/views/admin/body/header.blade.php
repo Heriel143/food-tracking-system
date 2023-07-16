@@ -176,7 +176,7 @@
                     <div class="flex items-center">
 
                         <img class="rounded-circle header-profile-user"
-                            src="{{ !empty($adminData->profile_image) ? url('upload/admin_images/' . $adminData->profile_image) : url('upload/no_image.jpg') }}"
+                            src="{{ !empty($adminData->profile_image) ? url($adminData->profile_image) : url('upload/no_image.jpg') }}"
                             alt="Header Avatar">
                         <span class="d-none d-xl-inline-block ms-1">{{ $adminData->name }}</span>
                         <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>

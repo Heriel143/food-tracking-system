@@ -33,13 +33,14 @@
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Sl</th>
-                                        <th>Purchase No.</th>
+                                        {{-- <th>Sl</th> --}}
+                                        <th>P No.</th>
                                         <th>Product Name</th>
                                         <th>Date</th>
                                         <th>Supplier</th>
-                                        <th>category</th>
+                                        <th>User</th>
                                         <th>Qty</th>
+                                        <th>Price</th>
                                         <th>Status</th>
                                         <th>Action</th>
 
@@ -50,18 +51,21 @@
 
                                     @foreach ($purchases as $key => $purchase)
                                         <tr>
-                                            <td class=""> {{ $key + 1 }} </td>
+                                            {{-- <td class=""> {{ $key + 1 }} </td> --}}
                                             <td> {{ $purchase->purchase_no }} </td>
                                             <td> {{ $purchase->product->name }} </td>
                                             <td> {{ date('d-m-Y', strtotime($purchase->date)) }} </td>
                                             <td> {{ $purchase->supplier->name }} </td>
-                                            <td> {{ $purchase->category->name }} </td>
+                                            <td> {{ $purchase->user->name }} </td>
                                             <td> {{ $purchase->buying_qty }} </td>
+                                            <td> {{ number_format($purchase->buying_price) }} </td>
                                             <td>
                                                 @if ($purchase->status == '0')
                                                     <span class="btn btn-warning ">Pending</span>
+                                                @elseif($purchase->status == '1' && $purchase->received == '1')
+                                                    <span class="btn btn-secondary ">Arrived</span>
                                                 @elseif($purchase->status == '1')
-                                                    <span class="btn btn-success ">Approved</span>
+                                                    <span class="btn btn-success ">In progress</span>
                                                 @endif
                                             </td>
 

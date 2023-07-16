@@ -57,7 +57,7 @@
                                 </div>
 
 
-                                <div class="col-md-3">
+                                {{-- <div class="col-md-3">
 
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label">Category
@@ -70,7 +70,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-3">
 
                                     <div class="md-3">
@@ -79,7 +79,9 @@
                                         <select name="product_id" id="product_id" class="form-select select2"
                                             aria-label="Default select example">
                                             <option selected="">select</option>
-
+                                            @foreach ($products as $product)
+                                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -116,7 +118,7 @@
                                 <table class="border-blue-900 table-sm table-bordered" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>Category</th>
+                                            {{-- <th>Category</th> --}}
                                             <th>Product Name</th>
                                             <th>Quantity</th>
                                             <th>Unit Price</th>
@@ -129,7 +131,7 @@
                                     </tbody>
                                     <tbody>
                                         <tr>
-                                            <td colspan="3"></td>
+                                            <td colspan="2"></td>
                                             <td class="text-xl font-bold text-center ">Discount</td>
                                             <td>
                                                 <input type="number" name="discount_amount" id="discount_amount"
@@ -138,7 +140,7 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3"></td>
+                                            <td colspan="2"></td>
                                             <td class="text-xl font-bold text-center ">Grand Total</td>
                                             <td>
                                                 <input type="text" name="estimated_amount" value="0"
@@ -200,12 +202,7 @@
         value = "@{{ invoice_no }}" >
             
             
-            <td >
-            <input type = "hidden"
-        name = "category_id[]"
-        value = "@{{ category_id }}" >
-            @{{ category_name }} 
-            </td> 
+            
             <td >
             <input type = "hidden"
         name = "product_id[]"
@@ -250,7 +247,7 @@
             $(document).on('click', '.addeventmore', function() {
                 var date = $('#date').val();
                 var invoice_no = $('#invoice_no').val();
-                var category_id = $('#category_id').val();
+                // var category_id = $('#category_id').val();
                 var customer_id = $('#customer_id').val();
                 var category_name = $('#category_id').find('option:selected').text();
                 var product_id = $('#product_id').val();
@@ -271,13 +268,13 @@
                     return false;
                 }
 
-                if (category_id == '') {
-                    $.notify('Category is required', {
-                        globalPosition: 'top right',
-                        className: 'error'
-                    })
-                    return false;
-                }
+                // if (category_id == '') {
+                //     $.notify('Category is required', {
+                //         globalPosition: 'top right',
+                //         className: 'error'
+                //     })
+                //     return false;
+                // }
                 if (customer_id == '') {
                     $.notify('Customer is required', {
                         globalPosition: 'top right',
@@ -298,9 +295,9 @@
                 var data = {
                     date: date,
                     invoice_no: invoice_no,
-                    category_id: category_id,
+                    // category_id: category_id,
                     customer_id: customer_id,
-                    category_name: category_name,
+                    // category_name: category_name,
                     product_id: product_id,
                     product_name: product_name
                 };
@@ -348,14 +345,14 @@
 
     <script type="text/javascript">
         $(function() {
-            $(document).on('change', '#product_id,#category_id', function() {
+            $(document).on('change', '#product_id', function() {
                 var product_id = $(this).val();
-                var category_id = $('#category_id').val();
+                // var category_id = $('#category_id').val();
                 $.ajax({
                     url: "{{ route('get-stock') }}",
                     type: 'GET',
                     data: {
-                        category_id: category_id,
+                        // category_id: category_id,
                         product_id: product_id
                     },
                     success: function(data) {

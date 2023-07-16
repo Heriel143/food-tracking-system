@@ -23,7 +23,7 @@ class CustomerController extends Controller
     //
     public function allCustomers()
     {
-        $customers = Customer::latest()->get();
+        $customers = Customer::where('region_id', Auth::user()->region_id)->get();
         return view('admin.customer.allCustomers', compact('customers'));
     }
     public function addCustomer()
@@ -37,19 +37,19 @@ class CustomerController extends Controller
     }
     public function creditCustomers()
     {
-        $payments = Payment::whereIn('paid_status', ['full_due', 'partial_paid'])->get();
+        $payments = Payment::where('region_id', Auth::user()->region_id)->where('status', 1)->whereIn('paid_status', ['full_due', 'partial_paid'])->get();
         return view('admin.customer.creditCustomers', compact('payments'));
     }
     public function customersPurchases()
     {
-        $payments = DB::table('payments')->selectRaw('customer_id, COUNT(customer_id) as no_of_invoices, SUM(total_amount) as total_amount')->groupBy('customer_id')->orderBy('total_amount', 'desc')->get();
+        $payments = DB::table('payments')->selectRaw('customer_id, COUNT(customer_id) as no_of_invoices, SUM(total_amount) as total_amount')->where('region_id', Auth::user()->region_id)->where('status', 1)->groupBy('customer_id')->orderBy('total_amount', 'desc')->get();
         // dd($payments);
         // $payments = Payment::where('paid_status', 'full_paid')->orderBy('created_at', 'desc')->orderBy('total_amount', 'desc')->get();
         return view('admin.customer.customersPurchases', compact('payments'));
     }
     public function printCustomersPurchases()
     {
-        $payments = DB::table('payments')->selectRaw('customer_id, COUNT(customer_id) as no_of_invoices, SUM(total_amount) as total_amount')->groupBy('customer_id')->orderBy('total_amount', 'desc')->get();
+        $payments = DB::table('payments')->selectRaw('customer_id, COUNT(customer_id) as no_of_invoices, SUM(total_amount) as total_amount')->where('region_id', Auth::user()->region_id)->where('status', 1)->groupBy('customer_id')->orderBy('total_amount', 'desc')->get();
         // dd($payments);
         // $payments = Payment::where('paid_status', 'full_paid')->orderBy('created_at', 'desc')->orderBy('total_amount', 'desc')->get();
         return view('admin.customer.printCustomersPurchases', compact('payments'));
@@ -64,7 +64,7 @@ class CustomerController extends Controller
     }
     public function printCreditCustomers()
     {
-        $payments = Payment::whereIn('paid_status', ['full_due', 'partial_paid'])->get();
+        $payments = Payment::where('region_id', Auth::user()->region_id)->where('status', 1)->whereIn('paid_status', ['full_due', 'partial_paid'])->get();
         return view('admin.customer.printCreditCustomers', compact('payments'));
     }
 
@@ -136,6 +136,7 @@ class CustomerController extends Controller
             'mobile_no' => $request->mobile_no,
             'email' => $request->email,
             'address' => $request->address,
+            'region_id' => Auth::user()->region_id,
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
         ]);

@@ -13,7 +13,7 @@ class SupplierController extends Controller
     public function allSuppliers()
     {
         // $suppliers = Supplier::all();
-        $suppliers = Supplier::latest()->get();
+        $suppliers = Supplier::where('region_id', Auth::user()->region_id)->get();
         return view('admin.supplier.allSuppliers', compact('suppliers'));
     }
     public function addSupplier()
@@ -33,6 +33,7 @@ class SupplierController extends Controller
             'mobile_no' => $request->mobile_no,
             'email' => $request->email,
             'address' => $request->address,
+            'region_id' => Auth::user()->region_id,
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
         ]);

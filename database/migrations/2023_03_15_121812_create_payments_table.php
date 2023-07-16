@@ -15,8 +15,11 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->integer('invoice_id');
-            $table->integer('customer_id');
+
+            $table->foreignId('invoice_id')->constrained();
+            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('region_id')->constrained();
+            $table->tinyInteger('status');
             $table->string('paid_status');
             $table->double('paid_amount');
             $table->double('due_amount');

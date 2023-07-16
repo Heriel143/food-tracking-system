@@ -9,7 +9,7 @@
         <!-- User details -->
         <div class="mt-3 text-center user-profile">
             <div class="flex justify-center">
-                <img src="{{ !empty($adminData->profile_image) ? url('upload/admin_images/' . $adminData->profile_image) : url('upload/no_image.jpg') }}"
+                <img src="{{ !empty($adminData->profile_image) ? url($adminData->profile_image) : url('upload/no_image.jpg') }}"
                     alt="" class="avatar-md rounded-circle">
             </div>
             <div class="mt-3">
@@ -89,9 +89,14 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.purchases') }}">All Purchases</a></li>
+                        {{-- @if (Auth::user()->role_id == 3) --}}
                         @if (Auth::user()->role_id == 3)
                             <li><a href="{{ route('pending.purchases') }}">Approval Purchases</a></li>
                         @endif
+                        <li><a href="{{ route('receive.purchases.all') }}">Receive Purchases</a></li>
+                        <li><a href="{{ route('receive.purchases.incomplete') }}">Incomplete Received Purchases</a>
+                        </li>
+                        {{-- @endif --}}
                         <li><a href="{{ route('purchase.report') }}">Daily Purchase Report</a></li>
                     </ul>
 
@@ -103,27 +108,18 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.invoices') }}">All Invoices</a></li>
+                        {{-- @if (Auth::user()->role_id == 2) --}}
                         @if (Auth::user()->role_id == 2)
                             <li><a href="{{ route('pending.invoices') }}">Approval Invoice</a></li>
                         @endif
+                        {{-- @endif --}}
                         <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li>
                     </ul>
 
                 </li>
-                @if (Auth::user()->role_id == 3)
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="ri-mail-send-line"></i>
-                            <span>Manage Employees</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{ route('all.employees') }}">All Employees</a></li>
-                            {{-- <li><a href="{{ route('pending.invoices') }}">Approval Invoice</a></li>
-                        <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li> --}}
-                        </ul>
+                {{-- @if (Auth::user()->role_id == 3) --}}
 
-                    </li>
-                @endif
+                {{-- @endif --}}
 
 
 
@@ -140,21 +136,31 @@
 
                     </ul>
                 </li>
+                @if (Auth::user()->role_id >= 3)
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="ri-mail-send-line"></i>
+                            <span>Manage Employees</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{ route('all.employees') }}">All Employees</a></li>
+                        </ul>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-profile-line"></i>
-                        <span>Utility</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="pages-starter.html">Starter Page</a></li>
-                        <li><a href="pages-timeline.html">Timeline</a></li>
-                        <li><a href="pages-directory.html">Directory</a></li>
-                        <li><a href="pages-invoice.html">Invoice</a></li>
-                        <li><a href="pages-404.html">Error 404</a></li>
-                        <li><a href="pages-500.html">Error 500</a></li>
-                    </ul>
-                </li>
+                    </li>
+                @endif
+                @if (Auth::user()->role_id == 4)
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="ri-mail-send-line"></i>
+                            <span>Manage Regions</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{ route('all.regions') }}">All Regions</a></li>
+                        </ul>
+
+                    </li>
+                @endif
+
 
 
 

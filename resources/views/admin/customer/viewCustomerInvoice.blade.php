@@ -95,7 +95,7 @@
                                                             <tr>
 
                                                                 <th class="text-center">Sl</th>
-                                                                <th class="text-center">Category</th>
+                                                                {{-- <th class="text-center">Category</th> --}}
                                                                 <th class="text-center">Product Name</th>
                                                                 <th class="text-center">Quatity</th>
                                                                 <th class="text-center">Unit Price</th>
@@ -110,7 +110,7 @@
                                                                 <tr>
 
                                                                     <td class="text-center">{{ $key + 1 }}</td>
-                                                                    <td class="text-center">{{ $details->category->name }}
+                                                                    {{-- <td class="text-center">{{ $details->category->name }} --}}
                                                                     </td>
                                                                     <td class="text-center">{{ $details->product->name }}
                                                                     </td>
@@ -127,30 +127,34 @@
                                                             @endforeach
                                                             <tr>
                                                                 <td colspan="3"></td>
-                                                                <td colspan="2">Sub Total</td>
-                                                                <td>{{ number_format($total_sum) }}</td>
+                                                                <td colspan="1">Sub Total</td>
+                                                                <td class="text-center">{{ number_format($total_sum) }}
+                                                                </td>
                                                             </tr>
                                                             @if ($invoice->payment->discount_amount)
                                                                 <tr>
                                                                     <td colspan="3"></td>
-                                                                    <td colspan="2">Discount</td>
-                                                                    <td>{{ number_format($invoice->payment->discount_amount) }}
+                                                                    <td colspan="1">Discount</td>
+                                                                    <td class="text-center">
+                                                                        {{ number_format($invoice->payment->discount_amount) }}
                                                                     </td>
                                                                 </tr>
                                                             @endif
                                                             <tr>
                                                                 <td colspan="3"></td>
-                                                                <td colspan="2">Paid Amount</td>
-                                                                <td>{{ number_format($invoice->payment->paid_amount) }}
+                                                                <td colspan="1">Paid Amount</td>
+                                                                <td class="text-center">
+                                                                    {{ number_format($invoice->payment->paid_amount) }}
                                                                 </td>
                                                             </tr>
                                                             @if ($invoice->payment->due_amount)
                                                                 <tr>
                                                                     <td colspan="3"></td>
-                                                                    <td colspan="2">Due Amount</td>
+                                                                    <td colspan="1">Due Amount</td>
                                                                     <input type="hidden" name="due_amount"
                                                                         value="{{ $invoice->payment->due_amount }}">
-                                                                    <td>{{ number_format($invoice->payment->due_amount) }}
+                                                                    <td class="text-center">
+                                                                        {{ number_format($invoice->payment->due_amount) }}
                                                                     </td>
                                                                 </tr>
                                                             @endif
@@ -185,7 +189,7 @@
                                                                         {{ date('d-m-Y', strtotime($item->date)) }}</td>
                                                                     {{-- dd($item->date); --}}
                                                                     <td class="text-center">
-                                                                        {{ $item->current_paid_amount }}
+                                                                        {{ number_format($item->current_paid_amount) }}
                                                                     </td>
                                                                     <td colspan="1"></td>
                                                                 </tr>

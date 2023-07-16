@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->tinyInteger('status')->default('1');
+            $table->foreignId('region_id')->constrained();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();

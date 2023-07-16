@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <h1 class="card-title">Add Product Page</h1>
+                            <h1 class="text-base card-title">Add Purchase</h1>
                             <div class="mt-3 row">
                                 <div class="col-md-4">
                                     <div class="md-3">
@@ -21,7 +21,8 @@
 
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label">Purchase No</label>
-                                        <input name="purchase_no" class="form-control example-date-input" type="text"
+                                        <input name="purchase_no" value="{{ $purchase_no }}"
+                                            class="form-control example-date-input" type="text" readonly
                                             id="purchase_no">
                                     </div>
                                 </div>
@@ -39,7 +40,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                {{-- <div class="col-md-4">
 
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label">Category
@@ -50,7 +51,7 @@
 
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-4">
 
                                     <div class="md-3">
@@ -84,7 +85,7 @@
                                 <table class="border-blue-900 table-sm table-bordered" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>Category</th>
+                                            <th>Supplier</th>
                                             <th>Product Name</th>
                                             <th>Quantity</th>
                                             <th>Unit Price</th>
@@ -132,16 +133,14 @@
             <input type = "hidden"
         name = "purchase_no[]"
         value = "@{{ purchase_no }}" >
-            <input type = "hidden"
+            
+            
+                <td >
+                <input type = "hidden"
         name = "supplier_id[]"
         value = "@{{ supplier_id }}" >
-            
-            <td >
-            <input type = "hidden"
-        name = "category_id[]"
-        value = "@{{ category_id }}" >
-            @{{ category_name }} 
-            </td> 
+                @{{ supplier_name }} 
+                </td> 
             <td >
             <input type = "hidden"
         name = "product_id[]"
@@ -193,8 +192,9 @@
                 var date = $('#date').val();
                 var purchase_no = $('#purchase_no').val();
                 var supplier_id = $('#supplier_id').val();
-                var category_id = $('#category_id').val();
-                var category_name = $('#category_id').find('option:selected').text();
+                var supplier_name = $('#supplier_id').find('option:selected').text();
+                // var category_id = $('#category_id').val();
+                // var category_name = $('#category_id').find('option:selected').text();
                 var product_id = $('#product_id').val();
                 var product_name = $('#product_id').find('option:selected').text();
 
@@ -219,13 +219,13 @@
                     })
                     return false;
                 }
-                if (category_id == '') {
-                    $.notify('Category is required', {
-                        globalPosition: 'top right',
-                        className: 'error'
-                    })
-                    return false;
-                }
+                // if (category_id == '') {
+                //     $.notify('Category is required', {
+                //         globalPosition: 'top right',
+                //         className: 'error'
+                //     })
+                //     return false;
+                // }
                 if (product_id == '') {
                     $.notify('Product is required', {
                         globalPosition: 'top right',
@@ -239,9 +239,10 @@
                 var data = {
                     date: date,
                     purchase_no: purchase_no,
+                    supplier_name: supplier_name,
                     supplier_id: supplier_id,
-                    category_id: category_id,
-                    category_name: category_name,
+                    // category_id: category_id,
+                    // category_name: category_name,
                     product_id: product_id,
                     product_name: product_name
                 };
@@ -302,14 +303,14 @@
     <script type="text/javascript">
         $(function() {
 
-            $(document).on('change', '#category_id', function() {
-                var category_id = $(this).val();
+            $(document).on('change', '#supplier_id', function() {
+                // var category_id = $(this).val();
                 var supplier_id = $('#supplier_id').val();
                 $.ajax({
                     url: "{{ route('get-product') }}",
                     type: 'GET',
                     data: {
-                        category_id: category_id,
+                        // category_id: category_id,
                         supplier_id: supplier_id
                     },
                     success: function(data) {

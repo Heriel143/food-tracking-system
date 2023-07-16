@@ -9,6 +9,11 @@
     <meta content="Inventory Management System" name="description" />
     <meta content="Themesdesign" name="author" />
     <!-- App favicon -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
     {{-- {{ asset('backend/') }} --}}
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
     <link href="{{ asset('backend/assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />

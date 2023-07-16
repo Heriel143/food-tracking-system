@@ -59,8 +59,8 @@
                                         <tr>
 
                                             <th class="text-center">Sl</th>
-                                            <th class="text-center">Category</th>
-                                            <th class="text-center">Product Name</th>
+                                            {{-- <th class="text-center">Category</th> --}}
+                                            <th colspan="2" class="text-center">Product Name</th>
                                             <th class="text-center">Current Stock</th>
                                             <th class="text-center">Quatity</th>
                                             <th class="text-center">Unit Price</th>
@@ -80,8 +80,8 @@
                                                 <input type="hidden" name="selling_qty[{{ $details->id }}]"
                                                     value="{{ $details->selling_qty }}">
                                                 <td class="text-center">{{ $key + 1 }}</td>
-                                                <td class="text-center">{{ $details->category->name }}</td>
-                                                <td class="text-center">{{ $details->product->name }}</td>
+                                                {{-- <td class="text-center">{{ $details->category->name }}</td> --}}
+                                                <td colspan="2" class="text-center">{{ $details->product->name }}</td>
                                                 @if ($details->product->quantity >= $details->selling_qty)
                                                     <td class="text-center" style="background-color: blue">
                                                         {{ $details->product->quantity }}</td>

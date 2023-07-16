@@ -46,7 +46,7 @@
                                     <label for="example-text-input" class="col-sm-2 col-form-label"> </label>
                                     <div class="col-sm-8">
                                         <img class="object-fill my-1 rounded-xl h-36 w-36"
-                                            src="{{ !empty($editData->profile_image) ? url('upload/admin_images/' . $editData->profile_image) : url('upload/no_image.jpg') }}"
+                                            src="{{ !empty($editData->profile_image) ? url($editData->profile_image) : url('upload/no_image.jpg') }}"
                                             alt="Card image cap">
                                     </div>
                                 </div>

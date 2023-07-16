@@ -15,16 +15,20 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->string('purchase_no');
-            $table->integer('product_id');
+            $table->integer('purchase_no');
+
+            $table->foreignId('product_id')->constrained();
             $table->date('date');
             $table->string('description')->nullable();
             $table->double('unit_price');
             $table->double('buying_qty');
             $table->double('buying_price');
-            $table->integer('supplier_id');
-            $table->integer('category_id');
-            $table->tinyInteger('status')->default('0')->comment('0=Pending, 1=Approved');
+
+            $table->foreignId('supplier_id')->constrained();
+            // $table->foreignId('category_id')->constrained();
+            $table->foreignId('region_id')->constrained();
+            $table->tinyInteger('status')->default('0')->comment('0=Pending, 1=Inprogress, 2=Received');
+            $table->tinyInteger('received')->default('0')->comment('0=Not_Received, 1=Received');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();

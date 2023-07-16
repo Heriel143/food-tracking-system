@@ -13,7 +13,7 @@ class CategoryController extends Controller
     //
     public function allCategories()
     {
-        $categories = Category::latest()->get();
+        $categories = Category::where('region_id', Auth::user()->region_id)->get();
         return view('admin.category.allCategories', compact('categories'));
     }
     public function addCategory()
@@ -25,6 +25,7 @@ class CategoryController extends Controller
     {
         Category::insert([
             'name' => $request->name,
+            'region_id' => Auth::user()->region_id,
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
         ]);

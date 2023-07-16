@@ -38,7 +38,7 @@
                                         <th>Invoice No</th>
                                         <th>Date</th>
                                         <th>Description</th>
-                                        <th>Amount</th>
+                                        <th>Amount(Tsh)</th>
                                         <th>Action</th>
 
                                 </thead>
@@ -53,7 +53,7 @@
                                             <td> #{{ $invoice->invoice_no }} </td>
                                             <td> {{ date('d-m-Y', strtotime($invoice->date)) }} </td>
                                             <td> {{ $invoice->description }} </td>
-                                            <td> Tsh {{ $invoice->payment->total_amount }} </td>
+                                            <td> {{ number_format($invoice->payment->total_amount) }} </td>
 
                                             <td>
 

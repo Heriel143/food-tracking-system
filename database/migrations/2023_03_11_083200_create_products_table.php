@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->double('quantity')->default('0');
-            $table->integer('supplier_id');
-            $table->integer('unit_id');
-            $table->integer('category_id');
-            $table->tinyInteger('status')->default('1');
+            $table->foreignId('supplier_id')->constrained();
+            $table->foreignId('unit_id')->constrained();
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('region_id')->constrained();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();

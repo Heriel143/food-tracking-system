@@ -16,7 +16,7 @@ class PurchaseControler extends Controller
 {
     public function allPurchases()
     {
-        $purchases = Purchase::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+        $purchases = Purchase::where('region_id', Auth::user()->region_id)->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
         return view('admin.purchase.allPurchases', compact('purchases'));
     }
     public function pendingPurchases()
@@ -24,10 +24,17 @@ class PurchaseControler extends Controller
         $purchases = Purchase::where('status', 0)->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
         return view('admin.purchase.pendingPurchases', compact('purchases'));
     }
+
+    public function receivePurchases()
+    {
+        $purchases = Purchase::where('status', 1)->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+        return view('admin.purchase.pendingPurchases', compact('purchases'));
+    }
+
     public function approvePurchase($id)
     {
         $purchase = Purchase::findOrFail($id);
-        Product::where('id', $purchase->product_id)->increment('quantity', $purchase->buying_qty);
+        // Product::where('id', $purchase->product_id)->increment('quantity', $purchase->buying_qty);
         $purchase->status = '1';
         $purchase->updated_by = Auth::user()->id;
         $purchase->save();
@@ -41,11 +48,18 @@ class PurchaseControler extends Controller
     }
     public function addPurchase()
     {
+        $purchase_data = Purchase::orderBy('id', 'desc')->first();
+        $purchase_no = '0';
+        if ($purchase_data == null) {
+            $purchase_no += 1;
+        } else {
+            $purchase_no = $purchase_data->purchase_no + 1;
+        }
         $suppliers = Supplier::all();
         $units = Unit::all();
         $categories = Category::all();
 
-        return view('admin.purchase.addPurchase', compact('categories', 'suppliers', 'units'));
+        return view('admin.purchase.addPurchase', compact('categories', 'suppliers', 'units', 'purchase_no'));
     }
     public function getCategory(Request $request)
     {
@@ -58,7 +72,7 @@ class PurchaseControler extends Controller
     public function getProduct(Request $request)
     {
 
-        $products = Product::where('supplier_id', $request->supplier_id)->where('category_id', $request->category_id)->get();
+        $products = Product::where('supplier_id', $request->supplier_id)->where('region_id', Auth::user()->region_id)->get();
         // dd($products);
         return response()->json($products);
     }
@@ -87,9 +101,9 @@ class PurchaseControler extends Controller
 
     public function storePurchase(Request $request)
     {
-        if ($request->category_id == null) {
+        if ($request->supplier_id == null) {
             $notification = array(
-                'message' => 'Sorry you do not select category name',
+                'message' => 'Sorry you did not select Supplier name',
                 'alert-type' => 'error'
             );
 
@@ -102,18 +116,20 @@ class PurchaseControler extends Controller
 
             return redirect()->back()->with($notification);
         } else {
-            $count_category = count($request->category_id);
-            for ($i = 0; $i < $count_category; $i++) {
+            $count_supplier = count($request->supplier_id);
+            for ($i = 0; $i < $count_supplier; $i++) {
                 $purchase = new Purchase();
                 $purchase->date = date('Y-m-d', strtotime($request->date[$i]));
                 $purchase->purchase_no = $request->purchase_no[$i];
                 $purchase->supplier_id = $request->supplier_id[$i];
                 $purchase->product_id = $request->product_id[$i];
-                $purchase->category_id = $request->category_id[$i];
+                // $purchase->category_id = $request->category_id[$i];
                 $purchase->buying_qty = $request->buying_qty[$i];
                 $purchase->unit_price = $request->unit_price[$i];
                 $purchase->buying_price = $request->buying_price[$i];
                 $purchase->description = $request->description[$i];
+                $purchase->region_id = Auth::user()->region_id;
+                $purchase->received = 0;
                 $purchase->created_by = Auth::user()->id;
                 $purchase->created_at = Carbon::now();
                 $purchase->status = '0';

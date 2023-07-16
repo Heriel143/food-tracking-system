@@ -51,18 +51,22 @@
                                         <tr>
                                             <td class=""> {{ $key + 1 }} </td>
                                             <td> {{ $employee->name }} </td>
-                                            <td> <img src="{{ url($employee->profile_image) }}" class="w-16 h-14"
+                                            <td> <img class="w-16 h-14"
+                                                    src="{{ !empty($employee->profile_image) ? url($employee->profile_image) : url('upload/no_image.jpg') }}"
                                                     alt="Employee image"> </td>
                                             <td> {{ $employee->email }} </td>
 
-                                            <td> {{ $employee->role->role }} </td>
-                                            <td>
-                                                {{-- {{$}} --}}
-                                                {{-- @if ($purchase->status == '0')
-                                                    <span class="btn btn-warning ">Pending</span>
-                                                @elseif($purchase->status == '1')
-                                                    <span class="btn btn-success ">Approved</span>
-                                                @endif --}}
+                                            <td> {{ $employee->role?->role }} </td>
+                                            <td class="flex justify-center">
+                                                @if ($employee->status == 1)
+                                                    <p class="inline-block px-3 py-1 text-white bg-green-500 rounded-3xl">
+                                                        Online
+                                                    </p>
+                                                @else
+                                                    <p class="inline-block px-3 py-1 text-white bg-red-500 rounded-3xl">
+                                                        Offline
+                                                    </p>
+                                                @endif
                                             </td>
 
 

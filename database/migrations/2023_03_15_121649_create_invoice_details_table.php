@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('invoice_details', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->integer('invoice_id');
-            $table->integer('category_id');
-            $table->integer('product_id');
+
+            $table->foreignId('invoice_id')->constrained();
+            // $table->foreignId('category_id')->constrained();
+            $table->foreignId('product_id')->constrained();
             $table->double('selling_qty');
             $table->double('unit_price');
             $table->double('selling_price');

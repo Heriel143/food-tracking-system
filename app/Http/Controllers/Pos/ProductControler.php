@@ -16,7 +16,7 @@ class ProductControler extends Controller
     public function allProducts()
     {
         // $suppliers = Supplier::all();
-        $products = Product::latest()->get();
+        $products = Product::where('region_id', Auth::user()->region_id)->get();
         return view('admin.product.allProducts', compact('products'));
     }
     public function addProduct()
@@ -54,6 +54,7 @@ class ProductControler extends Controller
             'category_id' => $request->category_id,
             'unit_id' => $request->unit_id,
             'quantity' => '0',
+            'region_id' => Auth::user()->region_id,
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
         ]);
