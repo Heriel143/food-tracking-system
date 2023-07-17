@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Pos\CategoryController;
 use App\Http\Controllers\Pos\CustomerController;
 use App\Http\Controllers\Pos\InvoiceController;
@@ -165,6 +166,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/receive/details', 'receiveDetailOn')->name('receive.details');
         Route::get('/admin/receive/incomplete', 'receivedAllIncomplete')->name('receive.purchases.incomplete');
         Route::get('/admin/receive/incomplete/print', 'receivedAllIncompletePrint')->name('print.incomplete.purchase');
+    });
+    Route::controller(NotificationController::class)->group(function () {
+        Route::get('/admin/notification/{id}', 'notify')->name('notification');
+        // Route::get('/admin/receive/purchase/{id}', 'receive')->name('receive.purchase');
+        // Route::get('/admin/receive/purchase/details/{id}', 'receiveDetails')->name('receive.purchase.details');
+        // Route::post('/admin/receive/details', 'receiveDetailOn')->name('receive.details');
+        // Route::get('/admin/receive/incomplete', 'receivedAllIncomplete')->name('receive.purchases.incomplete');
+        // Route::get('/admin/receive/incomplete/print', 'receivedAllIncompletePrint')->name('print.incomplete.purchase');
     });
 });
 

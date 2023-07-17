@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
+use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
 use App\Models\Product;
@@ -76,8 +77,17 @@ class InvoiceController extends Controller
                 $invoice_details->status = '1';
                 $invoice_details->save();
                 $product = Product::where('id', $invoice_details->product_id)->first();
-                $product->quantity = (float)($product->quantity) - (float)($val);
+                $nono = (float)($product->quantity) - (float)($val);
+                $product->quantity = $nono;
                 $product->save();
+                if ($nono <= 200)
+                    Notification::insert([
+                        'product_id' => $invoice_details->product_id,
+                        'description' => 'stock is running out',
+                        'amount' => $nono,
+                        'status' => 0,
+                        'created_at' => Carbon::now(),
+                    ]);
             }
             $invoice->save();
         });
@@ -85,6 +95,7 @@ class InvoiceController extends Controller
         $payment = Payment::where('invoice_id', $id)->first();
         $payment->status = '1';
         $payment->save();
+
 
         $notification = array(
             'message' => 'Invoice Approved Successfully',

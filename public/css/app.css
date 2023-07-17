@@ -742,6 +742,24 @@ select {
 .top-0 {
   top: 0px;
 }
+.left-2 {
+  left: 0.5rem;
+}
+.right-2 {
+  right: 0.5rem;
+}
+.top-1 {
+  top: 0.25rem;
+}
+.top-2 {
+  top: 0.5rem;
+}
+.top-3 {
+  top: 0.75rem;
+}
+.top-4 {
+  top: 1rem;
+}
 .z-0 {
   z-index: 0;
 }
@@ -979,6 +997,9 @@ select {
 }
 .shrink-0 {
   flex-shrink: 0;
+}
+.flex-grow-0 {
+  flex-grow: 0;
 }
 .border-collapse {
   border-collapse: collapse;
@@ -1251,6 +1272,14 @@ select {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.px-\[0\.3rem\] {
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+.px-\[0\.4rem\] {
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
 .pb-0 {
   padding-bottom: 0px;
 }
@@ -1324,6 +1353,14 @@ select {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 .font-bold {
   font-weight: 700;

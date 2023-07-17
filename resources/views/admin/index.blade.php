@@ -62,7 +62,7 @@
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
                 </div><!-- end col -->
-                <div class="col-xl-3 col-md-6">
+                {{-- <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex">
@@ -101,7 +101,7 @@
                             </div>
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
-                </div><!-- end col -->
+                </div><!-- end col --> --}}
             </div><!-- end row -->
             <div class="mb-4">
                 <iframe width="450" height="260" style="border: 1px solid #cccccc;"
@@ -214,7 +214,7 @@
                                             <th>Invoice no.</th>
                                             <th>Date</th>
                                             <th>Amount(Tsh)</th>
-                                            <th>Start date</th>
+                                            <th>Action</th>
                                             {{-- <th style="width: 120px;">Salary</th> --}}
                                         </tr>
                                     </thead><!-- end thead -->
