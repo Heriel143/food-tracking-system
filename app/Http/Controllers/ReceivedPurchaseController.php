@@ -22,6 +22,7 @@ class ReceivedPurchaseController extends Controller
         $purchase = Purchase::findOrFail($id);
         return view('admin.purchase.receiveDetails', compact('purchase'));
     }
+
     public function receivedAllIncomplete()
     {
         $purchases = ReceivedPurchase::where('status', 0)->orderBy('created_at', 'desc')->orderBy('id', 'desc')->get();

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('purchase_id')->constrained();
             $table->double('amount');
             $table->string('description');
+            $table->integer('Status');
+
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

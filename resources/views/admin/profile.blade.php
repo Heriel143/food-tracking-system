@@ -5,6 +5,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card">
+                        {{-- {{ dd($adminData->profile_image) }} --}}
                         <img class="object-fill mx-auto my-4 rounded-full h-52 w-52"
                             src="{{ !empty($adminData->profile_image) ? url($adminData->profile_image) : url('upload/no_image.jpg') }}"
                             alt="Card image cap">

@@ -25,7 +25,7 @@ class AdminController extends Controller
         );
 
         return redirect('/login')->with($notification);
-        // End Method 
+        // End Method
 
     }
 
@@ -78,13 +78,14 @@ class AdminController extends Controller
         $id = Auth::user()->id;
         $data = User::find($id);
         $data->name = $request->name;
-        $data->username = $request->username;
+        // $data->username = $request->username;
         $data->email = $request->email;
 
         if ($request->file('profile_image')) {
             $file = $request->file('profile_image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images'), $filename);
+            $file->move(public_path('upload/employee'), $filename);
+            $filename = "upload/employee/" . $filename;
             $data['profile_image'] = $filename;
         }
         $data->save();

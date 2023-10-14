@@ -17,7 +17,7 @@
     <!-- Style -->
     <link rel="stylesheet" href="css/style.css" />
 
-    <title>Login #7</title>
+    <title>Food Trackin System</title>
 </head>
 
 <body>
@@ -33,8 +33,7 @@
                             <div class="mb-4">
                                 <h3>Sign In</h3>
                                 <p class="mb-4">
-                                    Lorem ipsum dolor sit amet elit. Sapiente sit aut eos
-                                    consectetur adipisicing.
+
                                 </p>
                             </div>
                             <form action="{{ route('login') }}" method="POST">
